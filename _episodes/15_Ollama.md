@@ -24,7 +24,7 @@ keypoints:
 - The model like LLAMA3 450B can easily consumes 200gb storage of your PCs, so we have that saved locally for user to just load and run it
 - Ollama version 0.12 has been pre-installed as module on M3/SuperPOD, making it easier to work with
 
-## How to use Ollama on HPC: M3/SuperPOD
+## How to use Ollama on HPC: M3/SuperPOD terminal?
 
 ### Step 1: request a compute node with 1 GPU:
 
@@ -113,4 +113,61 @@ $ killall ollama
 ```
 
 
+## How to run Ollama on M3 using Open OnDemand portal: hpc.m3.smu.edu?
+
+### Step 1. Login to Open OnDemand portal as usual
+- Select JupyterLab
+
+### Step 2: JupyterLab's Custom Environment setting
+- The key thing here is to initialize Ollama module, setup base directory and serve the model before hand.
+- Put in the following code to Custom environment settings: (Note the OLLAMA_BASE_DIR is set to mine, email me at tuev@smu.edu if you want to be added to that storage, default is your home directory)
+
+```
+module load testing/ollama/0.12.11
+export OLLAMA_BASE_DIR=/projects/tuev/LLMs/LLMs/Ollama_models
+ollama serve &
+```
+
+### Step 3: Select gpu-dev partition
+- Ollama need gpu to run faster, so it is neccesary to use this partition to request GPU for your node
+- Note that gpu-dev has max walltime of 4 hours, so you have to select Time (hours) accordingly
+
+### Step 4: Click launch and open a Jupyter Notebook.
+- Note that here I use my own kernel with conda environment that I preinstall langchain. You can also create your own conda env.
+- Following is the code that run:
+
+```
+import ollama
+import subprocess
+import os
+# --- LLM & RAG ---
+from langchain_community.chat_models import ChatOllama
+
+# get home and job id
+home_dir =  os.getenv('HOME')
+job_id = os.getenv('SLURM_JOB_ID')
+
+# get ollama directory or default to home
+ollama_dir = os.getenv('OLLAMA_BASE_DIR', home_dir)
+
+try:
+    with open(f"{ollama_dir}/ollama/host_{job_id}.txt") as f:
+        HOST = f.read().strip()
+    with open(f"{ollama_dir}/ollama/port_{job_id}.txt") as f:
+        PORT = f.read().strip()
+    ollama_url = f"http://{HOST}:{PORT}"
+except Exception as e:
+    print("[⚠️] Could not read host/port, you manually set the `ollama_url` below.")
+
+
+chat_model = ChatOllama(
+            base_url=ollama_url,
+            model="gpt-oss:20b",
+            temperature=0,
+        )
+
+response = chat_model.invoke("Where is SMU")
+print(response.content)
+
+```
 
