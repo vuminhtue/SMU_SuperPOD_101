@@ -58,23 +58,23 @@ Host GPU
 
 - Note: enter your own username. The HostName needs to change to the correct GPU nodes that you requested in previous step.
 - Click on Connect to GPU
-- Select Linux for **Select platform of Remote Host GPU**
-- Enter Password and Duo for login node and Password for Compute node.
+- (Select Linux for **Select platform of Remote Host GPU**)
+- Enter Password and Duo for login node and Password again for Compute node.
 - You can also select to browse the files on SuperPOD and enter Password/Duo to authenticate it.
 - Once authenticated, you can work with any Jupyter Notebook from the SuperPOD directory
 
 ## 4.2. Using Port Forwarding
 
-- Download and use Cursor/VSCode for all OS (Windows/Macs/Linux). From terminal, ssh to superpod with specific port, for example port 8000:
+- Download and use Cursor/VSCode for all OS (Windows/Macs/Linux). From terminal, ssh to superpod with specific port, for example port 8080:
 
 ```bash
-$ ssh -C -D 8000 username@superpod.smu.edu
+$ ssh -C -D 8080 username@superpod.smu.edu
 ```
 
 The **C** stands for Compression and **D** stands for Dynamic port-forwarding with SOCKS4/5 to port number 8000. Feel free to change the port and remember to set it up in your browser
    
-## 4.1 Setup browser to enable proxy viewing (similar for MacOS/Linux as well)
-### 4.1.1 Using Firefox as browser:
+### 4.2.1 Setup browser to enable proxy viewing (similar for MacOS/Linux as well)
+#### 4.2.1.1 Using Firefox as browser:
    
 Open Firefox, my version is 104.0.2.
 Use combination Alt+T+S to open up the settings tab. Scroll to bottom and select Settings from Network Settings:
@@ -90,13 +90,13 @@ Use combination Alt+T+S to open up the settings tab. Scroll to bottom and select
 - Your screenshot should look like below:        
 ![image](https://user-images.githubusercontent.com/43855029/189716896-4415fb80-9b1f-4287-9ecf-6adc2b1357ef.png)
 
-### 4.1.2 Using Chrome/Safari as browser:
+### 4.2.1.2 Using Chrome/Safari as browser:
 
 Search for proxies and set a Socks proxy with sever localhost and port 8000.
 ![image](https://user-images.githubusercontent.com/43855029/228646182-f376dbd2-f850-4ac0-b300-2269e7394321.png)
    
-## 4.2 Test Proxy
-#### 4.2.1. Test Proxy using conda environment:   
+### 4.2.2 Test Proxy
+#### 4.2.2.1. Test Proxy using conda environment:   
         
 Go back to MobaXTerm and login into SuperPOD using regular SSH 
 Request a compute node
@@ -138,7 +138,7 @@ Select TensorflowGPU29 kernel notebook and Check GPU device:
    
 ![image](https://user-images.githubusercontent.com/43855029/211889805-da9d0740-3383-4b74-a347-b16525708ba3.png)
 
-#### 4.2.2. Test Proxy using docker container:   
+#### 4.2.2.2 Test Proxy using docker container:   
    
 For docker container, the command line need to have 1 additional flag:
    
