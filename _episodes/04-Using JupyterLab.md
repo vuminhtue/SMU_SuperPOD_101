@@ -49,8 +49,6 @@ $ srun -A my_allocation -N1 -G1 -c10 --mem=64G --time=12:00:00 --pty $SHELL
 Host SuperPOD
     HostName superpod.smu.edu
     User username
-    ControlMaster auto
-    ControlPath ~/.ssh/%r@%h:%p
 
 Host GPU
     HostName bcm-dgxa100-0001
@@ -59,8 +57,11 @@ Host GPU
 ```
 
 - Note: enter your own username. The HostName needs to change to the correct GPU nodes that you requested in previous step.
+- Click on Connect to GPU
+- Select Linux for **Select platform of Remote Host GPU**
 - Enter Password and Duo for login node and Password for Compute node.
 - You can also select to browse the files on SuperPOD and enter Password/Duo to authenticate it.
+- Once authenticated, you can work with any Jupyter Notebook from the SuperPOD directory
 
 ## 4.2. Using Port Forwarding
 
