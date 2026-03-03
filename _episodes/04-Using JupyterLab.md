@@ -14,12 +14,62 @@ keypoints:
 
 - There is **NO display config and Open OnDemand setup in SuperPOD**, so it is not quite straighforward to use Jupter Lab
 
-- However, it is still possible to use **Port-Forwarding** in SuperPOD in order to run Jupyter Lab.
-- Please download and use VSCode for all OS (Windows/Macs/Linux). From VSCode terminal, ssh to superpod with specific port, for example port 8000:
+- However, it is still possible to use either **Jump Host** or **Port-Forwarding** techinque in SuperPOD in order to run Jupyter Lab.
+   - **Jump Host** is preferred method using IDE like Cursor/VSCode only
+   - **Port-Forwarding** is an alternative method that involve the use of a loca web browser like Firefox or Chrome/Safari
+
+## 4.1. Using Jump Host
+
+- Please download and use Cursor/VSCode for all OS (Windows/Macs/Linux). From terminal, ssh to superpod as usual:
+
+```bash
+$ ssh username@superpod.smu.edu
+```   
+
+- You will be placed into a login node: either slogin-01 or slogin-02. Request for a compute node, the configuration below can be changed according to your need. The *my_allocation* can be found from Cold Front project
+
+```bash
+$ srun -A my_allocation -N1 -G1 -c10 --mem=64G --time=12:00:00 --pty $SHELL
+```
+
+- You will be given a compute node, for example **bcm-dgxa100-0001**. Keep this session opened and **open a new Cursor/Window.**
+- Click File\New Window (Ctrl+Shift+N)
+- Install Remote - SSH
+   - Go to the Extensions panel (Ctrl+Shift+X)
+   - Search for "Remote - SSH" (by Microsoft)
+   - Click Install
+
+- Connect to a Remote Host:
+   - Press Ctrl+Shift+P/or click **Connect via SSH** to open the Command Palette
+   - Type **"Remote-SSH: Connect to Host..."** and select it
+   - Click **"Configure SSH Host ..."** to open config file
+   - Enter the following script to the config file:
+
+```
+Host SuperPOD
+    HostName superpod.smu.edu
+    User username
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+
+Host GPU
+    HostName bcm-dgxa100-0001
+    User username
+    ProxyJump SuperPOD
+```
+
+- Note: enter your own username. The HostName needs to change to the correct GPU nodes that you requested in previous step.
+- Enter Password and Duo for login node and Password for Compute node.
+- You can also select to browse the files on SuperPOD and enter Password/Duo to authenticate it.
+
+## 4.2. Using Port Forwarding
+
+- Download and use Cursor/VSCode for all OS (Windows/Macs/Linux). From terminal, ssh to superpod with specific port, for example port 8000:
 
 ```bash
 $ ssh -C -D 8000 username@superpod.smu.edu
-```   
+```
+
 The **C** stands for Compression and **D** stands for Dynamic port-forwarding with SOCKS4/5 to port number 8000. Feel free to change the port and remember to set it up in your browser
    
 ## 4.1 Setup browser to enable proxy viewing (similar for MacOS/Linux as well)
