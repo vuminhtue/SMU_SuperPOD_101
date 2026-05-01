@@ -136,3 +136,30 @@ Note: Press **"q"** to quit checking module
 
 As we are on installation process, if you do not see the modules that you needed available, please inform us so we can install that for you
 
+## Login to SuperPOD without entering password
+- From your local machine (Window/Macs/Linux), open any terminal and type
+
+```
+$ ssh-keygen
+```
+
+- Press enter several time to accept default option, the new public key is created at **~/.ssh/id_ed25519.pub**
+- Copy the content of that file
+- Create shortcut for SuperPOD by modifying the **config** file inside same folder **~/.ssh**:
+
+```
+Host mp
+    HostName superpod.smu.edu
+    User tuev
+```
+- Now login to superpod by using shortcut key:
+
+```
+$ ssh mp
+```
+
+- Type in password as usual and DUO.
+- Create **authorized_keys** in **~/.ssh** folder if not exist.
+- Enter the content of your local  **~/.ssh/id_ed25519.pub** to that **authorized_keys**.
+- Save and exit.
+- Next time you login to SuperPOD via **ssh mp**, you will not need to type password. But you still need DUO
