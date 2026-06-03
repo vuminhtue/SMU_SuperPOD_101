@@ -67,4 +67,29 @@ In the example above, the run is less than 30s using GPU
 $ whisper -h
 ```
 
+# Whisper Diarization
+- The original Whisper above does not have ability to separate speakers. We follow the repo: https://github.com/MahmoudAshraf97/whisper-diarization to install this version into new conda env:
 
+```
+conda create -n whisperdiarize python=3.11 pip
+git clone https://github.com/MahmoudAshraf97/whisper-diarization.git
+cd whisper-diarization
+pip install -c constraints.txt -r requirements.txt
+```
+
+- Once installed, we can run the diarization:
+
+```
+python diarize.py -a AUDIO_FILE_NAME
+```
+
+### Command Line Options
+```
+-a AUDIO_FILE_NAME: The name of the audio file to be processed
+--no-stem: Disables source separation
+--whisper-model: The model to be used for ASR, default is medium.en
+--suppress_numerals: Transcribes numbers in their pronounced letters instead of digits, improves alignment accuracy
+--device: Choose which device to use, defaults to "cuda" if available
+--language: Manually select language, useful if language detection failed
+--batch-size: Batch size for batched inference, reduce if you run out of memory, set to 0 for non-batched inference
+```
