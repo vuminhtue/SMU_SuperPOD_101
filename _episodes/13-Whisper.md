@@ -95,10 +95,7 @@ python diarize.py -a AUDIO_FILE_NAME
 ```
 
 ### Whisper models:
-
-Optimized tool selectionConverting your tab-separated table into Markdown format now, preserving the same columns and values.
-
-Optimized tool selectionConverting your tab-separated table into Markdown format now, preserving the same columns and values.
+We can define the Whisper models with **--whisper-model:** flag:
 
 | Size | Parameters | English-only model | Multilingual model | Required VRAM | Relative speed |
 |---|---|---|---|---|---|
