@@ -75,7 +75,7 @@ module load conda gcc/13 cuda/12 ffmpeg
 conda create -n whisperdiarize python=3.11 pip
 git clone https://github.com/MahmoudAshraf97/whisper-diarization.git
 cd whisper-diarization
-python -m pip install --index-url https://download.pytorch.org/whl/cu128 torch torchvision torchaudio
+python -m pip install --index-url https://download.pytorch.org/whl/cu124 torch torchvision torchaudio 
 pip install -c constraints.txt -r requirements.txt
 ```
 
