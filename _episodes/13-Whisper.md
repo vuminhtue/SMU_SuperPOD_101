@@ -110,3 +110,23 @@ We can define the Whisper models with **--whisper-model:** flag:
 | large-v3-turbo | 1550 M | N/A | large | ~10 GB | 1x |
 
 
+# BATCH Script
+- We can submit a batch script to run Whisper Diarization or general Whisper model
+- Here is a sample of a batch script:
+
+```
+#!/bin/bash
+#SBATCH -A Your_HPC_Allocation        # specify allocation
+#SBATCH -J Whisper_Diarization      # job name to display in squeue
+#SBATCH -c 16 -G1 --mem=64G       # requested partition
+#SBATCH -t 4:00:00
+
+module load conda gcc/13 cuda/12 ffmpeg
+
+conda activate /projects/tuev/LLMs/LLMs/conda_env/whisperdiarize
+
+python /projects/tuev/LLMs/LLMs/whisper-diarization/diarize.py -a LLM01_L06_Audio.m4a --device cuda --whisper-model large-v3-turbo --batch-size 0 --suppress_numerals
+```
+
+
+
